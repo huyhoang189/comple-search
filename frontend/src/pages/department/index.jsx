@@ -15,7 +15,8 @@ import { departmentColumn } from "./column";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import departmentsSlice from "../../toolkits/department/slice";
-
+import ModalItem from "./modal";
+import CreateButton from "../../components/button/create.button";
 const Departments = () => {
   const dispatch = useDispatch();
   const { departments, department } = useSelector((state) => state.departments);
@@ -26,6 +27,10 @@ const Departments = () => {
   //filter for data
   const onFilterInputChange = (key, event) => {
     setKeyword(event.target.value);
+  };
+  //handle open modal
+  const handleModal = (_item) => {
+    dispatch(departmentsSlice.actions.toggleModal(_item));
   };
 
   let dataSource = [];
@@ -56,7 +61,12 @@ const Departments = () => {
             },
           ]}
         />
-
+        <CreateButton
+          onClick={() => handleModal(null)}
+          style={{ marginLeft: "auto" }}
+          size="large"
+        />
+        <ModalItem />
         <Divider style={{ margin: "10px" }}></Divider>
       </Row>
       <Row

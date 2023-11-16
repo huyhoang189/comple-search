@@ -13,6 +13,10 @@ export const router = createBrowserRouter([
     element: <Layouts />,
     children: [
       {
+        path: "/",
+        element: <Departments />,
+      },
+      {
         path: "departments",
         element: <Departments />,
       },
