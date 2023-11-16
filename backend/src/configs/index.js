@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const config = {
   api: {
-    port: process.env.DEV_PORT_APP || 3030,
+    port: process.env.DEV_PORT_APP || 3000,
   },
   database: {
     database: process.env.DEV_DB_NAME || "adapter_86z",

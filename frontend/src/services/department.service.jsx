@@ -4,7 +4,7 @@ const api = createAPIServices();
 
 export const getDepartments = (payload) => {
   return api.makeRequest({
-    url: `/departments?page=1&limit=1000&keyword=${payload?.keyword}`,
+    url: `/departments?page=1&limit=1000&keyword=${payload?.keyword || ""}`,
     method: "GET",
   });
 };

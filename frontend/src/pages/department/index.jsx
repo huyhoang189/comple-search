@@ -1,28 +1,68 @@
 import {
   Breadcrumb,
   Button,
-  Col,
   Divider,
-  Input,
   Popconfirm,
   Row,
   Space,
   Table,
   Tooltip,
+  Col,
   Typography,
+  Input,
 } from "antd";
 import { departmentColumn } from "./column";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import departmentsSlice from "../../toolkits/department/slice";
+import * as icons from "react-icons/ai";
 import ModalItem from "./modal";
+import UpdateButton from "../../components/button/update.button";
+import DeleteButton from "../../components/button/delete.button";
 import CreateButton from "../../components/button/create.button";
+import { HANDLE_TYPE } from "../../commons/constant";
 const Departments = () => {
   const dispatch = useDispatch();
   const { departments, department } = useSelector((state) => state.departments);
   const [keyword, setKeyword] = useState("");
 
-  const columns = [...departmentColumn];
+  const columns = [
+    ...departmentColumn,
+    {
+      title: "Công cụ",
+      key: "tool",
+      align: "center",
+      width: 140,
+      render: (text, record) => (
+        <Space
+          direction="horizontal"
+          style={{ width: "100%", justifyContent: "center" }}
+        >
+          <CreateButton
+            onClick={() =>
+              handleModal({
+                ...department,
+                parent: {
+                  ...record,
+                },
+              })
+            }
+          />
+          <UpdateButton onClick={() => handleModal(record)} />
+          <DeleteButton
+            onClick={() =>
+              dispatch(
+                departmentsSlice.actions.processingDepartment({
+                  item: record,
+                  actionName: HANDLE_TYPE.DELETE_ITEM,
+                })
+              )
+            }
+          />
+        </Space>
+      ),
+    },
+  ];
 
   //filter for data
   const onFilterInputChange = (key, event) => {
